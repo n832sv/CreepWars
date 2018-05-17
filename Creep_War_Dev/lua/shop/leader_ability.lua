@@ -29,6 +29,7 @@ local function set_leader_ability(unit)
 	if vars.creepwars_res_fire > 0 then arr[#arr + 1] = vars.creepwars_res_fire .. "0% Fire Res" end
 	if vars.creepwars_res_impact > 0 then arr[#arr + 1] = vars.creepwars_res_impact .. "0% Impact Res" end
 	if vars.creepwars_res_pierce > 0 then arr[#arr + 1] = vars.creepwars_res_pierce .. "0% Pierce Res" end
+	if (unit.__cfg.level or 0) < 1 then arr[#arr + 1] = "ZoC" end
 	local ability = T.name_only {
 		id = "creepwars_leader",
 		cumulative = false,
@@ -36,6 +37,7 @@ local function set_leader_ability(unit)
 		description = "Upgrades: " .. table.concat(arr, ", ")
 	}
 	wesnoth.add_modification(unit, "object", {
+		T.effect { apply_to = "zoc", value = true },
 		T.effect { apply_to = "remove_ability", T.abilities { ability } },
 		T.effect { apply_to = "new_ability", T.abilities { ability } }
 	})
